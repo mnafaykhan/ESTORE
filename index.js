@@ -14,7 +14,7 @@ const mySqlConnection = require("./config/mysqlConnect");
 
 // Middleware for parsing request bodies and enabling CORS
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ limit: "100mb", extended: true }));
+app.use(express.json({ limit: "200mb", extended: true }));
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to WebApis.");
 });
+
 mySqlConnection
   .authenticate()
   .then(async () => {

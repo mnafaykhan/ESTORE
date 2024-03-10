@@ -12,8 +12,8 @@ exports.createUser = async (req, res) => {
     body.password = await authHelper.encryptString(body.password);
     await userService.createUserAccount(body);
 
-    let link = await composeLink(body.email);
-    await sendEmail(body.email, link);
+    // let link = await composeLink(body.email);
+    // await sendEmail(body.email, link);
     return res
       .status(HttpCodes.OK)
       .send(
