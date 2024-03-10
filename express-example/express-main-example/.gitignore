@@ -1,3 +1,5 @@
 node_modules
 **/.hidden_directory/
 **/.hidden/
+**/.env
+**/.md
