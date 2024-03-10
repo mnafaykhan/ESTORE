@@ -1,7 +1,8 @@
-const { users } = require("./../routes");
+const { users, brand } = require("./../routes");
 
 module.exports = function (app) {
   //----------------------------------
   app.use("/api/user", users);
+  app.use("/api/user", brand);
   //----------------------------------
 };
