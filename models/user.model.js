@@ -2,11 +2,12 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("./../config/mysqlConnect"); // Assuming you have a Sequelize instance in config.js
 const Gender = require("./gender.model");
 const Role = require("./role.model");
+
 const User = sequelize.define(
   "User",
   {
     id: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER, // Changed to DataTypes.INTEGER
       allowNull: false,
       primaryKey: true,
       autoIncrement: true, // Specify auto-increment
@@ -56,11 +57,18 @@ const User = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    tableName: "user",
+    tableName: "users",
   }
 );
+
+
+
 // Define associations
-User.belongsTo(Gender, { foreignKey: "gender_id" ,as:"gender"});
-Gender.hasMany(User,{foreignKey:"gender_id",as:"user"}),
-User.belongsTo(Role, { foreignKey: "role_id",as:"role" });
+User.belongsTo(Gender, { foreignKey: 'gender_id', as: 'gender' }); // A user belongs to a gender
+Gender.hasMany(User, { foreignKey: 'gender_id', as: 'users' }); // A gender can have many users
+
+User.belongsTo(Role, { foreignKey: 'role_id', as: 'role' }); // A user belongs to a role
+Role.hasMany(User, { foreignKey: 'role_id', as: 'users' }); // A role can have many users
+
+
 module.exports = User;

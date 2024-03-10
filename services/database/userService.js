@@ -1,7 +1,6 @@
 const { UserModel, GenderModel, RoleModel } = require("./../../models");
 const HttpCodes = require("../../constants/httpCodes");
 const AppMessages = require("../../constants/appMessages");
-
 exports.getUserByEmail = async (email) => {
   const user = await UserModel.findOne({
     where: {
@@ -12,16 +11,14 @@ exports.getUserByEmail = async (email) => {
     include: [
       {
         model: GenderModel,
-        attributes: ["type"],
-        as: "gender",
-        where: {
-          is_active: true,
-        },
+        attributes: ["id"],
+        as: "gender", // Align the alias with the association alias
       },
     ],
   });
   return user;
 };
+
 
 exports.createUserAccount = async (body) => {
   let exists = await this.getUserByEmail(body.email);

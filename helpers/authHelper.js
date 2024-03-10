@@ -12,12 +12,18 @@ exports.generateEmailAuthToken = async (email) => {
   return token;
 };
 
+
 exports.isValidUser = async (requestPassword, encryptedPassword) => {
   let isValidPassword = await bcrypt.compare(
     requestPassword,
     encryptedPassword
   );
   return isValidPassword;
+};
+
+exports.generateAuthTokenWithObject = async (data) => {
+  const token = jwt.sign(data, process.env.NODE_SECRET_KEY);
+  return token;
 };
 
 exports.addAuthTokenInResponseHeader = async (data, resObject) => {

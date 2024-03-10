@@ -34,6 +34,8 @@ mySqlConnection
     try {
       console.log("Database connection established successfully");
       // await mySqlConnection.sync();
+      await mySqlConnection.sync({ force: false });
+
       console.log("Models synced successfully.");
       // Start the Express server
       app.listen(port, () => {

@@ -21,8 +21,7 @@ exports.listRoles = async () => {
 
 exports.findRole = async (id) => {
   let role = await RoleModel.findOne({ 
-    where: { id,
-      is_active: true, } });
+    where: { id }});
 
   return role;
 };

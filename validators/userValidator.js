@@ -36,7 +36,7 @@ let validateUserLogin = async (req, res, next) => {
   });
 
   try {
-    await schema.validateAsync(body, { abortEarly: false });
+    await schema.validateAsync(body);
     next();
   } catch (error) {
     return res.status(HttpCodes.FORBIDDEN).json({

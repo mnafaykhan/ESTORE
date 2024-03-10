@@ -10,16 +10,16 @@ const Role = sequelize.define(
       primaryKey: true,
       autoIncrement: true, // Specify auto-increment
     },
-    type: {
+    role_type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
-    timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
-    tableName: "role",
+    timestamps: false,
+    // createdAt: "created_at",
+    // updatedAt: "updated_at",
+    tableName: "roles",
   }
 );
 

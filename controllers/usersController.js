@@ -23,6 +23,7 @@ exports.createUser = async (req, res) => {
         )
       );
   } catch (err) {
+    console.log(err)
     return res.status(HttpCodes.BAD_REQUEST).json({
       status: "fail",
       message: err.message,
@@ -44,7 +45,7 @@ exports.loginUser = async (req, res) => {
     );
     if (isValidPassword) {
       let roleType = (await roleService.findRole(user.dataValues.role_id))
-        .dataValues.type;
+        .dataValues.role_type;
       const token = await authHelper.addAuthTokenInResponseHeader(
         {
           email: user.dataValues.email,
@@ -79,6 +80,7 @@ exports.loginUser = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err)
     return res.status(HttpCodes.BAD_REQUEST).json({
       status: "fail",
       message: err.message,
