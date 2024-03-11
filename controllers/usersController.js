@@ -48,10 +48,11 @@ exports.loginUser = async (req, res) => {
         .dataValues.role_type;
       const token = await authHelper.addAuthTokenInResponseHeader(
         {
+          name:user.dataValues.name,
           email: user.dataValues.email,
           id: user.dataValues.id,
           role_id: user.dataValues.role_id,
-          gender_id: user.dataValues.gender_id,
+          gender_id: user.dataValues.gender.id,
           role: roleType,
         },
         res
@@ -63,7 +64,7 @@ exports.loginUser = async (req, res) => {
           email: user.dataValues.email,
           id: user.dataValues.id,
           role_id: user.dataValues.role_id,
-          gender: user.dataValues.gender,
+          gender_id: user.dataValues.gender.id,
           dob: user.dataValues.dob,
           role: roleType,
         },
