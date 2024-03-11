@@ -1,6 +1,16 @@
 const { UserModel, GenderModel, RoleModel } = require("./../../models");
 const HttpCodes = require("../../constants/httpCodes");
 const AppMessages = require("../../constants/appMessages");
+
+exports.listUsers = async () => {
+  let allUsers = await UserModel.findAll({
+    where: {
+      is_active: true,
+    },
+  });
+  return allUsers;
+};
+
 exports.getUserByEmail = async (email) => {
   const user = await UserModel.findOne({
     where: {

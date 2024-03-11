@@ -6,6 +6,27 @@ const AppMessages = require("../constants/appMessages");
 const SuccessResponse = require("../composer/success-response");
 const composeLink = require("../helpers/composeLink");
 
+
+exports.listUsers = async (req, res) => {
+  let users = await userService.listUsers();
+  if (!users) {
+    throw new ErrorResponse(
+      HttpCodes.INTERNAL_SERVER_ERROR,
+      AppMessages.APP_RESOURCE_NOT_FOUND
+    );
+  } else {
+    users =
+      req.user?.role == "Admin"
+        ? users
+        : users.map((item) => ({
+          name: item.name,
+        }));
+    return res
+      .status(HttpCodes.OK)
+      .send(new SuccessResponse(AppMessages.SUCCESS, users));
+  }
+};
+
 exports.createUser = async (req, res) => {
   try {
     let { body } = req;
