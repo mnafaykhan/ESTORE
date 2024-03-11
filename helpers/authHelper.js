@@ -12,7 +12,6 @@ exports.generateEmailAuthToken = async (email) => {
   return token;
 };
 
-
 exports.isValidUser = async (requestPassword, encryptedPassword) => {
   let isValidPassword = await bcrypt.compare(
     requestPassword,

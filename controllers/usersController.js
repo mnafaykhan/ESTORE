@@ -23,7 +23,7 @@ exports.createUser = async (req, res) => {
         )
       );
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(HttpCodes.BAD_REQUEST).json({
       status: "fail",
       message: err.message,
@@ -48,7 +48,7 @@ exports.loginUser = async (req, res) => {
         .dataValues.role_type;
       const token = await authHelper.addAuthTokenInResponseHeader(
         {
-          name:user.dataValues.name,
+          name: user.dataValues.name,
           email: user.dataValues.email,
           id: user.dataValues.id,
           role_id: user.dataValues.role_id,
@@ -81,9 +81,33 @@ exports.loginUser = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(HttpCodes.BAD_REQUEST).json({
       status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    let user = await userService.deleteUserById(req.user.id);
+    if (!user) {
+      throw Error();
+    }
+
+    return res.status(HttpCodes.OK).json({
+      user,
+
+      Message: new SuccessResponse(
+        AppMessages.SUCCESS,
+        AppMessages.USER_SUCCESSFULY_LOGEDIN
+      ),
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(HttpCodes.BAD_REQUEST).json({
+      status: "fail in deletion",
       message: err.message,
     });
   }

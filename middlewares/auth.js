@@ -13,9 +13,9 @@ exports.auth = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.NODE_SECRET_KEY);
     req.user = decoded;
-    const user = await userService.getUserByEmail(req.user.email);
+    // const user = await userService.getUserByEmail(req.user.email);
     //console.log("Request is from User: ", user.dataValues);
-    if (!user) {
+    if (!req.user) {
       return res
         .status(HttpCodes.FORBIDDEN)
         .send(new ErrorResponse(AppMessages.INVALID_USER_CREDENTIALS));

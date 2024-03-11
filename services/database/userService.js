@@ -19,13 +19,16 @@ exports.getUserByEmail = async (email) => {
   return user;
 };
 
-
 exports.createUserAccount = async (body) => {
   let exists = await this.getUserByEmail(body.email);
   if (exists) {
-    throw new Error("User already exists"
-    );
+    throw new Error("User already exists");
   }
   const newUser = await UserModel.create({ ...body });
   return newUser;
+};
+
+exports.deleteUserById = exports.deleteUser = async (id) => {
+  let user = await UserModel.update({ is_active: false }, { where: { id } });
+  return user;
 };
