@@ -8,6 +8,10 @@ exports.listUsers = async () => {
       is_active: true,
     },
   });
+  allUsers.map(user => {
+   delete user.dataValues.password;
+    return user;
+  })
   return allUsers;
 };
 

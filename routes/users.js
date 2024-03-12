@@ -7,10 +7,7 @@ const {
 } = require("../middlewares");
 const { userValidator } = require("../validators")
 const { userController } = require("../controllers")
-const {
-  auth,
 
-} = require("../middlewares");
 router.post(
   "/register",
   [userValidator.validateCreateUser],
@@ -28,7 +25,7 @@ router.post(
 );
 router.get(
   "/listUsersForAdmin",
-  [auth, roleCheck(["Admin"])],
+  [auth, roleCheck(["admin"])],
   userController.listUsers
 );
 module.exports = router;

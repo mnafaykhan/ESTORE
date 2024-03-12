@@ -16,7 +16,7 @@ exports.listUsers = async (req, res) => {
     );
   } else {
     users =
-      req.user?.role == "Admin"
+      req.user?.role == "admin"
         ? users
         : users.map((item) => ({
           name: item.name,
@@ -122,7 +122,7 @@ exports.deleteUser = async (req, res) => {
 
       Message: new SuccessResponse(
         AppMessages.SUCCESS,
-        AppMessages.USER_SUCCESSFULY_LOGEDIN
+        AppMessages.USER_SUCCESSFULY_DELETED
       ),
     });
   } catch (err) {
