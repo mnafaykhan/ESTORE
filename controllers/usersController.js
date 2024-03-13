@@ -5,6 +5,7 @@ const HttpCodes = require("../constants/httpCodes");
 const AppMessages = require("../constants/appMessages");
 const SuccessResponse = require("../composer/success-response");
 const composeLink = require("../helpers/composeLink");
+const sendEmail = require("../utils/sendEmail");
 
 
 exports.listUsers = async (req, res) => {
@@ -33,8 +34,8 @@ exports.createUser = async (req, res) => {
     body.password = await authHelper.encryptString(body.password);
     await userService.createUserAccount(body);
 
-    // let link = await composeLink(body.email);
-    // await sendEmail(body.email, link);
+    let link = await composeLink(body.email);
+    await sendEmail(body.email, link);
     return res
       .status(HttpCodes.OK)
       .send(
@@ -57,6 +58,7 @@ exports.loginUser = async (req, res) => {
     let { body } = req;
 
     let user = await userService.getUserByEmail(body.email);
+    console.log('jfjkwdbvjksdbvkjsdbvsjdkvbsd\n', user)
     if (!user) {
       throw Error();
     }
@@ -131,5 +133,38 @@ exports.deleteUser = async (req, res) => {
       status: "fail in deletion",
       message: err.message,
     });
+  }
+};
+
+
+exports.verifyEmailAddress = async (req, res) => {
+  let userEmail = req.user.email;
+
+  let user = await userService.getUserByEmail(userEmail);
+  if (!user) {
+    return res.status(HttpCodes.BAD_REQUEST).json({
+      status: "fail in verification",
+      message: err.message,
+    });  } else {
+    if (user.dataValues.is_verified) {
+      return res
+        .status(HttpCodes.OK)
+        .send(
+          new SuccessResponse(
+            AppMessages.SUCCESS,
+            AppMessages.USER_ALREADY_VERIFIED
+          )
+        );
+    }
+
+    await userService.verifyUser(userEmail);
+    return res
+      .status(HttpCodes.OK)
+      .send(
+        new SuccessResponse(
+          AppMessages.SUCCESS,
+          AppMessages.USER_SUCCESSFULY_VERIFIED
+        )
+      );
   }
 };

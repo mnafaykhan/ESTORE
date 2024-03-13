@@ -8,10 +8,10 @@ exports.listUsers = async () => {
       is_active: true,
     },
   });
-  allUsers.map(user => {
-   delete user.dataValues.password;
+  allUsers.map((user) => {
+    delete user.dataValues.password;
     return user;
-  })
+  });
   return allUsers;
 };
 
@@ -45,4 +45,13 @@ exports.createUserAccount = async (body) => {
 exports.deleteUserById = exports.deleteUser = async (id) => {
   let user = await UserModel.update({ is_active: false }, { where: { id } });
   return user;
+};
+
+exports.verifyUser = async (userEmail) => {
+  const upDatedUser = await UserModel.update(
+    { is_verified: true },
+    { where: { email: userEmail } }
+  );
+
+  return upDatedUser;
 };

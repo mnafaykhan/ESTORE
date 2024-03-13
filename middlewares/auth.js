@@ -29,7 +29,7 @@ exports.auth = async (req, res, next) => {
   }
 };
 exports.authEmail = (req, res, next) => {
-  const token = req.header.token;
+  const token = req.header("x-auth-token");
   if (!token) {
     return res
       .status(HttpCodes.FORBIDDEN)

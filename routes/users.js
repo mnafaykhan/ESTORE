@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   roleCheck,
   auth,
+  authEmail,
   uploadImage,
 } = require("../middlewares");
 const { userValidator } = require("../validators")
@@ -28,4 +29,6 @@ router.get(
   [auth, roleCheck(["admin"])],
   userController.listUsers
 );
+router.post("/verifyEmail", [authEmail], userController.verifyEmailAddress);
+
 module.exports = router;
