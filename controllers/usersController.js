@@ -64,7 +64,7 @@ exports.loginUser = async (req, res) => {
       body.password,
       user.dataValues.password
     );
-    if (isValidPassword) {
+  if (isValidPassword) {
       let roleType = (await roleService.findRole(user.dataValues.role_id))
         .dataValues.role_type;
       const token = await authHelper.addAuthTokenInResponseHeader(
@@ -81,6 +81,7 @@ exports.loginUser = async (req, res) => {
 
       return res.status(HttpCodes.OK).json({
         User_details: {
+          token: token,
           name: user.dataValues.name,
           email: user.dataValues.email,
           id: user.dataValues.id,
@@ -95,6 +96,22 @@ exports.loginUser = async (req, res) => {
           AppMessages.USER_SUCCESSFULY_LOGEDIN
         ),
       });
+      // return res.status(HttpCodes.OK).json({
+      //   User_details: {
+      //     name: user.dataValues.name,
+      //     email: user.dataValues.email,
+      //     id: user.dataValues.id,
+      //     role_id: user.dataValues.role_id,
+      //     gender_id: user.dataValues.gender.id,
+      //     dob: user.dataValues.dob,
+      //     role: roleType,
+      //   },
+
+      //   Message: new SuccessResponse(
+      //     AppMessages.SUCCESS,
+      //     AppMessages.USER_SUCCESSFULY_LOGEDIN
+      //   ),
+      // });
     } else {
       return res.status(HttpCodes.FORBIDDEN).json({
         status: AppMessages.FORBIDDEN,

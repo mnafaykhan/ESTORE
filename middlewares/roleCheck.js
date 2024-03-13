@@ -11,12 +11,16 @@ exports.roleCheck = (roles = []) => {
     try {
       userRole = (await findRole(role_id)).dataValues.role_type;
     } catch (err) {
+      console.error(err);
+
       return res
         .status(HttpCodes.FORBIDDEN)
         .send(new ErrorResponse(err.message));
     }
     req.user.role = userRole;
-    const roleSet = new Set(roles);
+    const roleSet = new Set(roles); // why set?
+    console.error("req.user.role: ", req.user.role);
+    console.error("roleSet: ", roleSet);
 
     if (!userRole || !roleSet.has(userRole)) {
       return res

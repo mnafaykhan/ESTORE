@@ -39,9 +39,10 @@ router.post(
 );
 
 router.get("/listBrands", brandController.listBrands);
+
 router.get(
   "/listBrandsForAdmin",
-  [auth, roleCheck(["Admin"])],
+  [auth, roleCheck(["admin"])],
   brandController.listBrands
 );
 module.exports = router;

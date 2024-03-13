@@ -18,7 +18,7 @@ let validateCreateUser = async (req, res, next) => {
 
   try {
     req.body.is_active = true;
-    req.body.is_verified = false;
+    req.body.is_verified = false; // wait for click email link
     await schema.validateAsync(body);
     next();
   } catch (error) {
