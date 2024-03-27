@@ -126,9 +126,8 @@ exports.getPopularity = async (req, res) => {
       const popularity = await brandService.getPopularity(brandId);
 
       return res.status(200).send({
-        id: brand.id,
-        name: brand.name,
-        popularity,
+        id: brandId,
+        ...popularity
       });
 
     } catch (err) {

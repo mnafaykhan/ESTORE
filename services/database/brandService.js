@@ -58,9 +58,8 @@ exports.getPopularity = async (id) => {
       return popularity
 
     } else {
-      errorStr = "brand is not active !"
+      return {"Response":"Brand is inactive!"}
     }
-    errorStr = "brand DNE !"
   }
-  throw new Error(errorStr)
+  return {"Response":"Brand not found!"}
 };

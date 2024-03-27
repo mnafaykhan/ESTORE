@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 });
 
 let sendEmail = async (receipient, messageBody) => {
-  messageBody = `Hi there,\n\nThank you for signing up for Tkxel-Mobile. Click on the link below to verify your email:\n\n${messageBody}\n\nThis link will expire in 24 hours. If you did not sign up for a Tkxel-Mobile account,\nyou can safely ignore this email.\n\nBest Regards,\n\nThe Tkxel Team`;
+  messageBody = `Hi there,\n\nThank you for signing up for Estore. Click on the link below to verify your email:\n\n${messageBody}\n\nThis link will expire in 24 hours. If you did not sign up for a Tkxel-Mobile account,\nyou can safely ignore this email.\n\nBest Regards,\n\nThe Tkxel Team`;
   // Define email details
   const mailOptions = {
     from: process.env.GMAIL_ID, // Sender's email address
