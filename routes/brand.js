@@ -45,4 +45,11 @@ router.get(
   [auth, roleCheck(["admin"])],
   brandController.listBrands
 );
+
+
+router.get(
+  "/:id/popularity",
+  [auth, roleCheck(["admin"])],
+  brandController.getPopularity
+);
 module.exports = router;

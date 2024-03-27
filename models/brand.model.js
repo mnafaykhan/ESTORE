@@ -21,6 +21,14 @@ const Brand = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    sales_volume: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    average_rating: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.0,
+    },  
   },
   {
     timestamps: true,

@@ -6,9 +6,12 @@ exports.addBrand = async (body) => {
 };
 
 exports.findBrand = async (name) => {
-  let brand = await BrandModel.findOne({ 
-    where: { name,
-    is_active: true,} });
+  let brand = await BrandModel.findOne({
+    where: {
+      name,
+      is_active: true,
+    }
+  });
   return brand;
 };
 
@@ -32,6 +35,7 @@ exports.deleteBrand = async (id) => {
   let brand = await BrandModel.update({ is_active: false }, { where: { id } });
   return brand;
 };
+
 exports.listBrands = async () => {
   let allBrands = await BrandModel.findAll({
     where: {
@@ -39,4 +43,24 @@ exports.listBrands = async () => {
     },
   });
   return allBrands;
+};
+
+exports.getPopularity = async (id) => {
+  let brand = await BrandModel.findByPk(id);
+  if (brand) {
+    if (brand.is_active) {
+
+      const popularity = {
+        salesVolume: brand.sales_volume,
+        averageRating: brand.average_rating,
+        // Calculate other metrics or a composite score if desired
+      };
+      return popularity
+
+    } else {
+      errorStr = "brand is not active !"
+    }
+    errorStr = "brand DNE !"
+  }
+  throw new Error(errorStr)
 };

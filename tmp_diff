@@ -1,0 +1,24 @@
+commit 55f733d710e38bb29851771ab1cd8524cc9f5285
+Merge: 4cf613f b7ce8d9
+Author: mnafaykhan <105639115+mnafaykhan@users.noreply.github.com>
+Date:   Wed Mar 27 20:26:44 2024 +0500
+
+    Merge pull request #3 from mnafaykhan/dev_brandEdpts
+    
+    list all brands endpoint
+
+diff --cc middlewares/auth.js
+index 20f68b8,f7241b2..e0f5468
+--- a/middlewares/auth.js
++++ b/middlewares/auth.js
+@@@ -28,8 -35,9 +35,9 @@@ exports.auth = async (req, res, next) =
+        .send(new ErrorResponse(AppMessages.APP_ACCESS_DENIED));
+    }
+  };
++ 
+  exports.authEmail = (req, res, next) => {
+ -  const token = req.header.token;
+ +  const token = req.header("x-auth-token");
+    if (!token) {
+      return res
+        .status(HttpCodes.FORBIDDEN)
