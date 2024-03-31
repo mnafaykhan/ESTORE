@@ -24,7 +24,7 @@ exports.auth = async (req, res, next) => {
         .status(HttpCodes.FORBIDDEN)
         .send(new ErrorResponse(AppMessages.INVALID_USER_CREDENTIALS));
     }
-
+console.log("auth passed");
     next();
   } catch (error) {
     // If any error occurs during the token verification process (e.g., if the token is invalid, expired, or tampered with), a catch block captures the error. 
