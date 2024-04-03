@@ -34,11 +34,7 @@ exports.activateModel = async (id) => {
 };
 
 exports.listModels = async () => {
-  let allModels = await ProductModel.findAll({
-    where: {
-      is_active: 1,
-    },
-  });
+  let allModels = await ProductModel.findAll();
   return allModels;
 };
 

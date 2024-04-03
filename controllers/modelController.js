@@ -101,10 +101,14 @@ exports.listModels = async (req, res) => {
       models =
         req.user?.role.toLowerCase() == "admin"
           ? models
-          : models.map((item) => ({
-              id: item.id,
-              name: item.name,
-            }));
+          : models
+              .filter((item) => {
+                return item.is_active == 0 ? false : true;
+              })
+              .map((item) => ({
+                id: item.id,
+                name: item.name,
+              }));
       return res
         .status(HttpCodes.OK)
         .send(new SuccessResponse(AppMessages.SUCCESS, models));
@@ -125,15 +129,15 @@ exports.listModels = async (req, res) => {
 
 exports.activateModel = async (req, res) => {
   try {
-    let exists = await modelService.findModelById (req.body.id);
+    let exists = await modelService.findModelById(req.body.id);
     if (!exists) {
       throw new ErrorResponse(
         HttpCodes.BAD_REQUEST,
         AppMessages.APP_RESOURCE_NOT_FOUND
       );
     } else {
-      console.log
-      await modelService.activateModel (req.body.id);
+      console.log;
+      await modelService.activateModel(req.body.id);
       return res
         .status(HttpCodes.OK)
         .send(
