@@ -77,9 +77,13 @@ exports.listCategories = async (req, res) => {
   let categories = await categoryService.listCategories();
   if (categories) {
     categories =
-      req.user?.role == "Admin"
+      req.user?.role?.toLowerCase() == "admin"
         ? categories
-        : categories.map((item) => ({
+        : categories
+        .filter((item) => {
+          return item.is_active == 0 ? false : true;
+        })
+        .map((item) => ({
             name: item.name,
             id: item.id,
             image_url: item.image_url,
@@ -92,5 +96,33 @@ exports.listCategories = async (req, res) => {
       HttpCodes.INTERNAL_SERVER_ERROR,
       AppMessages.APP_RESOURCE_NOT_FOUND
     );
+  }
+};
+exports.activateCategory = async (req, res) => {
+  try {
+    let exists = await categoryService.findCategoryById(req.body.id);
+    if (!exists) {
+      throw new ErrorResponse(
+        HttpCodes.BAD_REQUEST,
+        AppMessages.APP_RESOURCE_NOT_FOUND
+      );
+    } else {
+      console.log;
+      await categoryService.activateCategory(req.body.id);
+      return res
+        .status(HttpCodes.OK)
+        .send(
+          new SuccessResponse(
+            AppMessages.SUCCESS,
+            AppMessages.RECORD_SUCCESSFULY_UPDATED
+          )
+        );
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(HttpCodes.BAD_REQUEST).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };

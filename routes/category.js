@@ -45,4 +45,9 @@ router.get(
   categoryController.listCategories
 );
 
+router.post(
+  "/acivateCategory",
+  [auth, roleCheck(["Admin"]), categoryValidator.validateCategoryActivation],
+  categoryController.activateCategory
+);
 module.exports = router;

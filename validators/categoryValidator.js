@@ -68,4 +68,22 @@ exports.validateCategoryDeletion = async (req, res, next) => {
   }
 };
 
+exports.validateCategoryActivation = async (req, res, next) => {
+  const schema = Joi.object({
+    id: Joi.string().max(255).required(),
+  });
+
+  try {
+
+    await schema.validateAsync(req.body);
+
+    next();
+  } catch (error) {
+    console.error(error.message);
+    return res
+      .status(HttpCodes.FORBIDDEN)
+      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
+  }
+};
+
 // inputString.replace(/\b\w/g, match => match.toUpperCase());

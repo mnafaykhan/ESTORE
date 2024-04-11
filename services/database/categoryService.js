@@ -39,10 +39,18 @@ exports.deleteCategory = async (id) => {
 };
 
 exports.listCategories = async () => {
-  let allCategories = await CategoryModel.findAll({
-    where: {
-      is_active: true,
-    },
-  });
+  let allCategories = await CategoryModel.findAll();
   return allCategories;
+};
+exports.findCategoryById = async (id) => {
+  let category = await CategoryModel.findOne({ 
+    where: { id } });
+  return category;
+};
+exports.activateCategory = async (id) => {
+  let category = await CategoryModel.update(
+    { is_active: 1 },
+    { where: { id } }
+  );
+  return category;
 };
