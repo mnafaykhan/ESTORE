@@ -34,7 +34,7 @@ mySqlConnection
     try {
       console.log("Database connection established successfully");
       // await mySqlConnection.sync();
-      await mySqlConnection.sync({ force: false });
+      await mySqlConnection.sync({ force: false }); // // if true, this will create the table(s) if they don't exist. Use with caution, as it drops existing tables.
 
       console.log("Models synced successfully.");
       // Start the Express server

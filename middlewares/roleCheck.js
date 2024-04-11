@@ -9,7 +9,7 @@ exports.roleCheck = (roles = []) => {
     const role_id = req.body?.role_id || req.user?.role_id;
     let userRole;
     try {
-      userRole = (await findRole(role_id)).dataValues.role_type;
+      userRole =(await findRole(role_id)).dataValues.role_type;
     } catch (err) {
       console.error(err);
 
@@ -18,7 +18,7 @@ exports.roleCheck = (roles = []) => {
         .send(new ErrorResponse(err.message));
     }
     req.user.role = userRole;
-    const roleSet = new Set(roles); // why set?
+    const roleSet = new Set(roles.map (role => role.toLowerCase())); // why set?
     console.error("req.user.role: ", req.user.role);
     console.error("roleSet: ", roleSet);
 
