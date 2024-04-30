@@ -5,6 +5,7 @@ const SuccessResponse = require("../composer/success-response");
 const ErrorResponse = require("../composer/error-response");
 
 exports.addCategory = async (req, res) => {
+  try{
   let { body } = req;
   let exists = !!(await categoryService.findCategory(body.name));
   if (exists) {
@@ -23,9 +24,17 @@ exports.addCategory = async (req, res) => {
         )
       );
   }
+} catch(err) {
+  console.log(err)
+  return res.status(HttpCodes.BAD_REQUEST).json({
+    status: "fail",
+    message: err.message,
+  });
+}
 };
 
 exports.updateCategory = async (req, res) => {
+  try{
   let { body } = req;
   let categories = await categoryService.findCategory(body.name);
   if (categories) {
@@ -45,9 +54,17 @@ exports.updateCategory = async (req, res) => {
       AppMessages.APP_RESOURCE_NOT_FOUND
     );
   }
+}catch(err) {
+  console.log(err)
+  return res.status(HttpCodes.BAD_REQUEST).json({
+    status: "fail",
+    message: err.message,
+  });
+}
 };
 
 exports.deleteCategory = async (req, res) => {
+  try{
   let { body } = req;
 
   let affectedRows = await categoryService.deleteCategory(body.id);
@@ -71,9 +88,17 @@ exports.deleteCategory = async (req, res) => {
         AppMessages.RECORD_SUCCESSFULY_DELETED
       )
     );
+  } catch(err) {
+    console.log(err)
+    return res.status(HttpCodes.BAD_REQUEST).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
 };
 
 exports.listCategories = async (req, res) => {
+  try{
   let categories = await categoryService.listCategories();
   if (categories) {
     categories =
@@ -97,6 +122,13 @@ exports.listCategories = async (req, res) => {
       AppMessages.APP_RESOURCE_NOT_FOUND
     );
   }
+} catch(err) {
+  console.log(err)
+  return res.status(HttpCodes.BAD_REQUEST).json({
+    status: "fail",
+    message: err.message,
+  });
+}
 };
 exports.activateCategory = async (req, res) => {
   try {
