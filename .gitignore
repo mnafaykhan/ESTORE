@@ -132,4 +132,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+<<<<<<< HEAD
 Updated_ERD.png
+=======
+public
+>>>>>>> e1831d631d8eaffe66633caa97efc0676a5be9e6

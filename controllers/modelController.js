@@ -154,4 +154,8 @@ exports.activateModel = async (req, res) => {
       message: err.message,
     });
   }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> e1831d631d8eaffe66633caa97efc0676a5be9e6
