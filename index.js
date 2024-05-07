@@ -52,5 +52,5 @@ mySqlConnection
   .catch((err) => {
     console.log("Following error occurred");
     console.log(err.message);
-    console.log(err);
+    // console.log(err);
   });

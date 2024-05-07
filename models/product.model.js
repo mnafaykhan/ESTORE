@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("./../config/awsmysql");
+const sequelize = require("./../config/mysqlConnect");
 const Brand = require("./brand.model");
 const Category = require("./category.model");
 const Model = require("./productModel.model");
