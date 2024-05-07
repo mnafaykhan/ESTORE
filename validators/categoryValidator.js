@@ -2,6 +2,7 @@ const Joi = require("joi");
 const HttpCodes = require("../constants/httpCodes");
 const AppMessages = require("../constants/appMessages");
 const ErrorResponse = require("../composer/error-response");
+const utils = require("utils");
 
 exports.validateCategoryAddition = async (req, res, next) => {
   const schema = Joi.object({
@@ -10,20 +11,11 @@ exports.validateCategoryAddition = async (req, res, next) => {
     is_active: Joi.boolean().default(true).required(),
   });
 
-  try {
-    
-    req.body.image_url = req.file?.filename;
-    req.body.is_active = true;
-    let { body } = req;
-    await schema.validateAsync(body);
-    console.log("validated category addition body");
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  // Sanitize input data
+  req.body.image_url = req.file?.filename;
+  req.body.is_active = true;
+
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateCategoryUpdation = async (req, res, next) => {
@@ -35,18 +27,8 @@ exports.validateCategoryUpdation = async (req, res, next) => {
       otherwise: Joi.optional(),
     }),
   });
-  try {
-    let { body } = req;
 
-    await schema.validateAsync(body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateCategoryDeletion = async (req, res, next) => {
@@ -54,18 +36,7 @@ exports.validateCategoryDeletion = async (req, res, next) => {
     id: Joi.number().integer().required(),
   });
 
-  try {
-    let { body } = req;
-
-    await schema.validateAsync(body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateCategoryActivation = async (req, res, next) => {
@@ -73,17 +44,5 @@ exports.validateCategoryActivation = async (req, res, next) => {
     id: Joi.string().max(255).required(),
   });
 
-  try {
-
-    await schema.validateAsync(req.body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
-
-// inputString.replace(/\b\w/g, match => match.toUpperCase());

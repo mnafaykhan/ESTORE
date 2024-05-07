@@ -2,6 +2,7 @@ const Joi = require("joi");
 const HttpCodes = require("../constants/httpCodes");
 const AppMessages = require("../constants/appMessages");
 const ErrorResponse = require("../composer/error-response");
+const utils = require("utils");
 
 exports.validateModelAddition = async (req, res, next) => {
   const schema = Joi.object({
@@ -9,18 +10,7 @@ exports.validateModelAddition = async (req, res, next) => {
     is_active: Joi.boolean().default(true).required(),
   });
 
-  try {
-    
-    let { body } = req;
-
-    await schema.validateAsync(body);
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateModelUpdation = async (req, res, next) => {
@@ -29,18 +19,7 @@ exports.validateModelUpdation = async (req, res, next) => {
     newName: Joi.string().max(255).required(),
   });
 
-  try {
-    let { body } = req;
-
-    await schema.validateAsync(body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateModelDeletion = async (req, res, next) => {
@@ -48,18 +27,7 @@ exports.validateModelDeletion = async (req, res, next) => {
     name: Joi.string().max(255).required(),
   });
 
-  try {
-    let { body } = req;
-
-    await schema.validateAsync(body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
 
 exports.validateModelActivation = async (req, res, next) => {
@@ -67,15 +35,5 @@ exports.validateModelActivation = async (req, res, next) => {
     id: Joi.string().max(255).required(),
   });
 
-  try {
-
-    await schema.validateAsync(req.body);
-
-    next();
-  } catch (error) {
-    console.error(error.message);
-    return res
-      .status(HttpCodes.FORBIDDEN)
-      .send(new ErrorResponse(AppMessages.APP_ERROR_INVALID_REQUEST));
-  }
+  await utils.validateSchema(schema, req, res, next);
 };
